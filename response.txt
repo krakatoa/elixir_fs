@@ -1,0 +1,15 @@
+3> Payload = pkt:decapsulate(Packet).
+[#ether{dhost = <<0,0,0,0,0,0>>,
+        shost = <<0,0,0,0,0,0>>,
+        type = 2048,crc = 0},
+ #ipv4{v = 4,hl = 5,tos = 0,len = 59,id = 45481,df = 1,
+       mf = 0,off = 0,ttl = 64,p = 6,sum = 35601,
+       saddr = {127,0,0,1},
+       daddr = {127,0,0,1},
+       opt = <<>>},
+ #tcp{sport = 6379,dport = 45435,seqno = 1823593320,
+      ackno = 1034926866,off = 8,cwr = 0,ece = 0,urg = 0,ack = 1,
+      psh = 1,rst = 0,syn = 0,fin = 0,win = 43,sum = 65071,
+      urp = 0,
+      opt = <<1,1,8,10,0,1,133,2,...>>},
+ <<"+PONG\r\n">>]

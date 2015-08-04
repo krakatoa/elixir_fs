@@ -1,4 +1,8 @@
 defmodule TcpElixir.Server do
+  require Record
+  # Record.defrecord :ipv4, Record.extract(:ipv4, from: "./deps/pkt/include/pkt.hrl")
+  Record.defrecord :tcp, Record.extract(:tcp, from: "./deps/pkt/include/pkt_tcp.hrl")
+
   #@behaviour :gen_server
 
   #def start_link do
@@ -12,7 +16,7 @@ defmodule TcpElixir.Server do
 
   def accept(port) do
     {:ok, socket} = :gen_tcp.listen(port,
-                      [:binary, packet: :line, active: false])
+                      [:binary, packet: :raw, active: false, reuseaddr: true])
     IO.puts "Accepting connections on port #{port}"
     loop_acceptor(socket)
   end
@@ -34,12 +38,23 @@ defmodule TcpElixir.Server do
 
   defp read_line(socket) do
     {:ok, data} = :gen_tcp.recv(socket, 0)
-    IO.puts "Received: #{data}"
-    # IO.puts "Received: #{:erlang.binary_to_term(data)}"
-    data
+    # IO.puts "Packet: #{inspect data, limit: 150}"
+    #try do
+      [ether|[ipv4|[tcp|[payload|_]]]] = :pkt.decapsulate(data)
+      if length(:erlang.binary_to_list(payload)) == 0 do
+        "OK"
+      else
+        # IO.puts "IPv4 Head: #{inspect ipv4(ipv4)}"
+        IO.puts "TCP Head: #{inspect tcp(tcp)}"
+        IO.puts "Payload: #{inspect payload}\n"
+        "OK"
+      end
+    #rescue
+    #  e -> "ERR"
+    #end
   end
 
-  defp write_line(line, socket) do
-    :gen_tcp.send(socket, "tarola")
+  defp write_line(response, socket) do
+    :gen_tcp.send(socket, response)
   end
 end

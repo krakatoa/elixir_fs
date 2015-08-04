@@ -8,7 +8,7 @@ defmodule TcpElixir do
 
     children = [
       supervisor(Task.Supervisor, [[name: TcpElixir.TaskSupervisor]]),
-      worker(Task, [TcpElixir.Server, :accept, [34254]])
+      worker(Task, [TcpElixir.Server, :accept, [34252]])
     ]
 
     opts = [strategy: :one_for_one, name: TcpElixir.Supervisor]
