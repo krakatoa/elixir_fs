@@ -2,16 +2,17 @@ defmodule TcpElixir do
   use Application
 
   def start(_type, _args) do
-    # TcpElixir.Server.start_link
+    TcpElixir.Client.start_link
+    TcpElixir.App.start_link
 
-    import Supervisor.Spec
+    # import Supervisor.Spec
 
-    children = [
-      supervisor(Task.Supervisor, [[name: TcpElixir.TaskSupervisor]]),
-      worker(Task, [TcpElixir.Server, :accept, [34252]])
-    ]
+    # children = [
+    #   supervisor(Task.Supervisor, [[name: TcpElixir.TaskSupervisor]]),
+    #   worker(Task, [TcpElixir.Server, :accept, [34252]])
+    # ]
 
-    opts = [strategy: :one_for_one, name: TcpElixir.Supervisor]
-    Supervisor.start_link(children, opts)
+    # opts = [strategy: :one_for_one, name: TcpElixir.Supervisor]
+    # Supervisor.start_link(children, opts)
   end
 end

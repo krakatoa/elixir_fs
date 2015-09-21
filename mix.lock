@@ -1,2 +1,1 @@
-%{"bullet": {:git, "git://github.com/msantos/pkt.git", "b955d6344809cf50ca0ebbedc8ff7a2f73470651", []},
-  "pkt": {:git, "git://github.com/msantos/pkt.git", "b955d6344809cf50ca0ebbedc8ff7a2f73470651", []}}
+%{"json": {:hex, :json, "0.3.2"}}

@@ -12,7 +12,7 @@ defmodule TcpElixir.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :pkt],
+    [applications: [:logger],
       mod: {TcpElixir, []}]
   end
 
@@ -26,6 +26,6 @@ defmodule TcpElixir.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:pkt, github: "msantos/pkt"}]
+    [{:json, "~> 0.3.0"}]
   end
 end
