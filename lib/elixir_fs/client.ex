@@ -27,7 +27,7 @@ defmodule ElixirFs.Client do
             case String.length(new_buffer) >= content_length do
               true ->
                 {body,new_buffer} = String.split_at(new_buffer, content_length)
-                case :gen_server.call(TcpElixir.App, {:msg_with_header, data, body}) do
+                case :gen_server.call(ElixirFs.App, {:msg_with_header, data, body}) do
                   {:response, response} ->
                     :gen_tcp.send(socket, "#{response}\n\n")
                   {:noresponse} ->
@@ -38,7 +38,7 @@ defmodule ElixirFs.Client do
                 {:noreply, {socket, aux_buffer}}
             end
           false ->
-            case :gen_server.call(TcpElixir.App, {:msg, data}) do
+            case :gen_server.call(ElixirFs.App, {:msg, data}) do
               {:response, response} ->
                 :gen_tcp.send(socket, "#{response}\n\n")
               {:noresponse} ->
