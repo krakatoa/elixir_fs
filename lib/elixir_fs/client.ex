@@ -1,6 +1,4 @@
-defmodule TcpElixir.Client do
-  require Record
-
+defmodule ElixirFs.Client do
   @behaviour :gen_server
 
   def start_link do

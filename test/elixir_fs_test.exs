@@ -1,4 +1,4 @@
-defmodule TcpElixirTest do
+defmodule ElixirFsTest do
   use ExUnit.Case
 
   test "the truth" do

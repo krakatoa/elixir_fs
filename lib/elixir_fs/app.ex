@@ -1,4 +1,4 @@
-defmodule TcpElixir.App do
+defmodule ElixirFs.App do
   @behaviour :gen_server
 
   def start_link do
@@ -21,11 +21,6 @@ defmodule TcpElixir.App do
     response = "events json ALL"
     {:reply, {:response, response}, state}
   end
-
-  # def handle_call({:msg, "Content-Type: command/reply\nReply-Text: +OK"}, _from, state) do
-  #   IO.puts "[TRACE] call accepted\n"
-  #   response = ""
-  # end
 
   def handle_call({:msg, "Content-Type: command/reply\nReply-Text: +OK event listener enabled json"}, _from, state) do
     IO.puts "[TRACE] app listening events\n"
@@ -52,18 +47,14 @@ defmodule TcpElixir.App do
         case json["Channel-Call-State"] do
           "RINGING" ->
             uuid = json["Channel-Call-UUID"]
-            # response = "SendMsg #{uuid}\ncall-command: execute\nexecute-app-name: respond\ncontent-type: text/plain\ncontent-length: 11\n\n180 Ringing"
-            # response = response <> "\n\nSendMsg #{uuid}\ncall-command: execute\nexecute-app-name: answer"
             response = "sendmsg #{uuid}\ncall-command: execute\nexecute-app-name: answer"
             {:reply, {:response, response}, state}
           _ -> {:reply, {:noresponse}, state}
         end
       "CHANNEL_EXECUTE" ->
         IO.puts "[DEBUG] #{inspect json}\n"
+        # uuid = json["variable_call_uuid"]
         {:reply, {:noresponse}, state}
-      #   uuid = json["variable_call_uuid"]
-      #   response = "sendmsg #{uuid}\ncall-command: execute\nexecute-app-name: answer"
-      #   {:reply, {:response, response}, state}
       _ ->
         {:reply, {:noresponse}, state}
     end
